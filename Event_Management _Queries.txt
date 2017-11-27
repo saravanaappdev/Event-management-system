@@ -1,0 +1,38 @@
+
+** user details **
+
+create table if not exists user_details(
+    user_id                  varchar(255),
+    user_name           varchar(20)          notnull,
+    first_name          varchar(20)          notnull,
+    last_name           varchar(20)          notnull,
+    password            varchar(20)          notnull,
+    sex			varchar(1)           notnull,
+    marital_status      varchar(1)           notnull,
+    email_id            varchar(50)          notnull,
+    event_id_details    varchar(255)         notnull,
+    mobile_number        varchar(50)          notnull,
+    address_id          varchar(10)          notnull,
+        
+    constraint      user_details_user_id                primary key(user_id),
+    constraint      user_details_email_id               primary key(email_id),
+    constraint      user_details_event_id_details       primary key(event_id_details),
+    constraint      user_details_address_id             primary key(address_id)	
+);
+
+
+** Address **
+create table if not exist address(
+    nationality         varchar(20)          notnull,
+    state               varchar(20)          notnull,
+    district            varchar(20)          notnull,
+    area                varchar(20)          notnull,
+    doorno              varchar(20)          notnull,
+    pincode             int                  notnull,
+ 
+	
+
+
+
+
+);
