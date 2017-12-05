@@ -1,0 +1,156 @@
+
+** user_login **
+create table if not exists user_login(
+    user_id                  varchar(20),   
+    password                 varchar(255)     notnull,
+
+    constraint        user_log_user_id        primary key(user_id)
+);
+
+
+
+** user details **
+
+create table if not exists user_details(
+    user_id             varchar(255),   
+    image               blob,
+    first_name          varchar(20)          notnull,
+    last_name           varchar(20)          notnull,
+    gender		varchar(1)           notnull,
+    marital_status      varchar(1)           notnull,
+    date_of_birth       date                 notnull,
+    email_id            varchar(50)          notnull,
+    mobile_number       varchar(50)          notnull,
+    address_id          varchar(10)          notnull,
+        
+    
+    constraint      foreignkey(user_id)     referrenced(user_log_user_id);	
+    constraint      user_details_email_id               primary key(email_id),
+    constraint      user_details_event_id_details       primary key(event_id_details),
+    constraint      user_details_address_id             primary key(address_id)	
+);
+
+
+** Address **
+create table if not exist address(
+    user_id             varchar(20),
+    nationality         varchar(20)          notnull,
+    state               varchar(20)          notnull,
+    district            varchar(20)          notnull,
+    area                varchar(20)          notnull,
+    doorno              varchar(20)          notnull,
+    pincode             int                  notnull
+
+    constraint  foreignkey(user_id)     referrenced(user_details_user_id);
+ 
+	);
+
+ 
+** Personal_events **
+
+create table if not exists personal_events(
+   user_id                   varchar(20),
+   event_id                  varchar(20)            notnull,
+   event_name                date                   notnull,
+   event_description         varchar(255)           notnull,
+   event_date                date                   notnull,
+ 
+   
+   constraint  foreignkey(user_id)           referrenced(user_login_user_id),
+   constraint  personal_events_event_id      primary key
+
+);
+
+
+** organizer_details **
+
+create table if not exists organizer_details(
+   user_id                         varchar(20),
+   event_id                        varchar(20),
+   organizer_id                    varchar(20),
+   organizer_name                  varchar(20)       notnull,
+   organizer_mobile_number         varchar(20)       notnull,
+
+   constraint  foreignkey(user_id)                 referrenced(user_login_user_id),
+   constraint  foreignkey(event_id)                referrenced(personal_events_event_id),
+   condtraint  organizer_details_organizer_id      primary key(organizer_id)
+
+
+);
+
+
+
+
+
+** event_type **
+
+create table if not exist event_type(
+     user_id                    varchar(20),
+     event_id                   varchar(20),
+     event_type                 varchar(20)         notnull,
+   
+   constraint  foreignkey(user_id)                 referrenced(user_login_user_id),
+   constraint  foreignkey(event_id)                referrenced(personal_events_event_id),
+              
+
+); 
+
+
+
+** venue details **
+
+create table if not exist venue_details(
+     venue_id                   varchar(20),
+     user_id                    varchar(20),
+     event_id                   varchar(20), 
+     venue_place                varchar(50),
+     venue_address              varchar(100),
+     food_description           varchar(100),
+     room_details               varchar(100),
+
+     constraint  foreignkey(user_id)                 referrenced(user_login_user_id),
+     constraint  foreignkey(event_id)                referrenced(personal_events_event_id)  
+
+
+); 
+
+
+** entry_type **
+
+create table if not exist entry_type(
+	user_id             varchar(20),               
+        event_id            varchar(20)             notnull,
+        entry_type          varchar(20)             notnull,
+        entry_fee           int                     notnull,
+        discount            int                     notnull,
+      
+        constraint  foreignkey(user_id)                 referrenced(user_login_user_id),
+        constraint  foreignkey(event_id)                referrenced(personal_events_event_id)  
+
+
+);
+
+ 
+
+
+** Making-Events **
+
+create table if not exist making_events(
+    user_id                      varchar(20),
+    event_id                     varchar(20), 
+    event_name                   varchar(20)          notnull,
+    event_status_code            varchar(20)          check in ("cancelled","approved","amount_paid","finished","processing"),
+    event_type                   varchar(20)          notnull,
+    organizer_id                 varchar(20),
+    event_start_time             varchar(20)          notnull,
+    event_end_time               varchar(20)          notnull,
+    number_of_participation        int                notnull,
+    derived_duration               int                notnull,
+    entry_type                   varchar(20),
+    venue_id                     varchar(20),    
+    
+    constraint  foreignkey(user_id)                 referrenced(user_login_user_id),
+    constraint  foreignkey(event_id)                referrenced(personal_events_event_id)  
+ 
+
+);
